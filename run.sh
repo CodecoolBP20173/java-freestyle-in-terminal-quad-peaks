@@ -1,2 +1,2 @@
-javac -cp QuadEngine.jar:. PrimitiveType.java
+javac -cp QuadEngine.jar:. *.java
 java -cp QuadEngine.jar:. PrimitiveType
