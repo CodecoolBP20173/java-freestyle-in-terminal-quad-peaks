@@ -14,7 +14,9 @@ class PrimitiveType {
     private static long time;
     private static long deltaTime;
     private static long deltaSum;
-
+    
+    private static Word[] words;
+    
     public static void main(String[] args) {
         Console.clearScreen();
         programStart = System.currentTimeMillis();
