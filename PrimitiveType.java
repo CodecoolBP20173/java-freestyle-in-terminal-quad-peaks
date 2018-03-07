@@ -1,7 +1,6 @@
 import com.codecool.termlib.Terminal;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.IOException;
 
 import com.codecool.termlib.Coord;
 
@@ -9,30 +8,48 @@ class PrimitiveType {
 
     public static Terminal Console = new Terminal();
 
-    private static int wordSpeed = 5;
+    private static int wordSpeed = 2;
+
+    private static long programStart;
+    private static long time;
+    private static long deltaTime;
+    private static long deltaSum;
 
     public static void main(String[] args) {
-        //Console.clearScreen();
-        Word word = new Word(0,50,"sajt");
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run() {
-                word.move();
-            }
-        };
-        timer.schedule(task, 0L, 1000L / wordSpeed);
-    }
+        Console.clearScreen();
+        programStart = System.currentTimeMillis();
+        Word word = new Word(0, 50, "lolka");
+        Boolean quit = false;
+        while (!quit) {
+            deltaTime = (System.currentTimeMillis() - programStart) - time;
+            time = System.currentTimeMillis() - programStart;
+            deltaSum += deltaTime;
 
-    private Character tryToRead() {
-        try {
-            if (System.in.available() > 0) {
-                return (char)System.in.read();
+            //INPUT CHECK
+            Character c = tryToRead();
+            if (c != null) {
+                if (c == 'q')
+                {
+                    quit = true;
+                }
+            }
+
+            if (deltaSum >= 500 / wordSpeed) {
+                word.move();
+                deltaSum = 0;
             }
         }
-        catch (IOException e) {
+    }
+
+    private static Character tryToRead() {
+        try {
+            if (System.in.available() > 0) {
+                return (char) System.in.read();
+            }
+        } catch (IOException e) {
             System.err.println("Error " + e.getMessage());
         }
         return null;
     }
-    
+
 }
