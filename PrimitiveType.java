@@ -32,7 +32,7 @@ class PrimitiveType {
             //INPUT CHECK
             Character c = tryToRead();
             if (c != null) {
-                if (c == 'q')
+                if (c == '0')
                 {
                     quit = true;
                 }
