@@ -1,6 +1,8 @@
 import com.codecool.termlib.Terminal;
 import com.codecool.termlib.Coord;
 import com.codecool.termlib.Direction;
+import java.util.Arrays;
+
 import com.codecool.termlib.Color;
 
 public class DynamicWordArray {
