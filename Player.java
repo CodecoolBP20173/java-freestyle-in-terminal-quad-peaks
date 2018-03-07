@@ -20,30 +20,31 @@ public class Player {
         int currentLifePoints = maxLifePoints;
         Coord[] playerCoords = new Coord[6];
         Coord pos0 = new Coord();
-        pos0.x = 20;
-        pos0.y = 60;
+        pos0.x = 24;
+        pos0.y = 40;
         playerCoords[0]= pos0;
         Coord pos1 = new Coord();
-        pos1.x = 20;
-        pos1.y = 61;
+        pos1.x = 24;
+        pos1.y = 41;
         playerCoords[1]= pos1;
         Coord pos2 = new Coord();
-        pos2.x = 20;
-        pos2.y = 59;
+        pos2.x = 24;
+        pos2.y = 39;
         playerCoords[2]= pos2;
         Coord pos3 = new Coord();
-        pos3.x = 19;
-        pos3.y = 60;
+        pos3.x = 23;
+        pos3.y = 40;
         playerCoords[3]= pos3;
         Coord pos4 = new Coord();
-        pos4.x = 18;
-        pos4.y = 60;
+        pos4.x = 22;
+        pos4.y = 40;
         playerCoords[4]= pos4;
         Coord pos5 = new Coord();
-        pos5.x = 17;
-        pos5.y = 60;
+        pos5.x = 21;
+        pos5.y = 40;
         playerCoords[5]= pos5;
         drawPlayer(playerCoords);
+
     }
 
     public void drawPlayer(Coord[] drawCoords){
