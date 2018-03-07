@@ -8,7 +8,7 @@ class PrimitiveType {
 
     public static Terminal Console = new Terminal();
 
-    private static int wordSpeed = 2;
+    private static int wordSpeed = 5;
 
     private static long programStart;
     private static long time;
@@ -32,6 +32,7 @@ class PrimitiveType {
                 {
                     quit = true;
                 }
+                word.wordHitHandler(c);
             }
 
             if (deltaSum >= 500 / wordSpeed) {
