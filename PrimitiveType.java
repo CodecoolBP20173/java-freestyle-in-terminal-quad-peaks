@@ -8,7 +8,7 @@ class PrimitiveType {
 
     public static Terminal Console = new Terminal();
 
-    private static int wordSpeed = 2;
+    private static int wordSpeed = 5;
 
     private static long programStart;
     private static long time;
@@ -20,6 +20,7 @@ class PrimitiveType {
     public static void main(String[] args) {
         Console.clearScreen();
         programStart = System.currentTimeMillis();
+        Player player = new Player(5,5,10);
         Word word = new Word(0, 50, "lolka");
         Boolean quit = false;
         while (!quit) {
@@ -34,6 +35,7 @@ class PrimitiveType {
                 {
                     quit = true;
                 }
+                word.wordHitHandler(c);
             }
 
             if (deltaSum >= 500 / wordSpeed) {
