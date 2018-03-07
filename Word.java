@@ -8,7 +8,7 @@ public class Word {
     public Coord position;
     public int hitCount;
 
-    public void initialize(int x, int y, String name)
+    public Word(int x, int y, String name)
     {
         this.name = name;
         position = new Coord();

@@ -12,9 +12,8 @@ class PrimitiveType {
     private static int wordSpeed = 5;
 
     public static void main(String[] args) {
-        Console.clearScreen();
-        Word word = new Word();
-        word.initialize(0, 50, "sajt");
+        //Console.clearScreen();
+        Word word = new Word(0,50,"sajt");
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
