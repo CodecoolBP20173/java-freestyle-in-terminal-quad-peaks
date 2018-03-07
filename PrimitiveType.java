@@ -1,4 +1,5 @@
 import com.codecool.termlib.Terminal;
+import java.util.concurrent.ThreadLocalRandom;
 
 import java.io.IOException;
 
@@ -14,11 +15,13 @@ class PrimitiveType {
     private static long time;
     private static long deltaTime;
     private static long deltaSum;
+    public static int randomWordIndex;
 
     public static void main(String[] args) {
         Console.clearScreen();
+        randomWordIndex = getRandomInt(0, Word.nameList.length);
         programStart = System.currentTimeMillis();
-        Word word = new Word(0, 50, "lolka");
+        Word word = new Word(0, 50, Word.nameList[randomWordIndex]);
         Boolean quit = false;
         while (!quit) {
             deltaTime = (System.currentTimeMillis() - programStart) - time;
@@ -33,6 +36,10 @@ class PrimitiveType {
                     quit = true;
                 }
                 word.wordHitHandler(c);
+                if (word.destroyed) {
+                    randomWordIndex = getRandomInt(0, Word.nameList.length);
+                    word = new Word(0, 50, Word.nameList[randomWordIndex]);
+                }
             }
 
             if (deltaSum >= 500 / wordSpeed) {
@@ -53,4 +60,7 @@ class PrimitiveType {
         return null;
     }
 
+    private static int getRandomInt(int start, int end) {
+        return ThreadLocalRandom.current().nextInt(start, end);
+    }
 }
