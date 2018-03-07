@@ -1,6 +1,7 @@
 import com.codecool.termlib.Terminal;
 import com.codecool.termlib.Coord;
 import com.codecool.termlib.Direction;
+import com.codecool.termlib.Color;
 
 public class Word {
 
@@ -17,14 +18,39 @@ public class Word {
         show();
     }
 
+    public wordHitHandler(char typedChar) {
+        for (int i = 0; i < name.length(); i++){
+            if (name.charAt(i) == typedChar){
+                hitCount ++;
+                PrimitiveType.Console.setColor(RED);
+                
+            }
+        }
+
+
+    }
+
+    private destroyed(){
+        if (hitCount == name.length()) {
+            selfClear();
+        }
+
+    }
+
+    public void refresh() {
+        show();
+        PrimitiveType.Console.setColor(Color.WHITE);
+    
+    }
+
+
     public void move() {
         selfClear();
         position.x += 1;
         show();
     }
 
-    public void show()
-    {
+    public void show(){
         PrimitiveType.Console.moveTo(position.x, position.y);
         for(int i = 0; i < name.length(); i++){
             System.out.print(name.charAt(i));
