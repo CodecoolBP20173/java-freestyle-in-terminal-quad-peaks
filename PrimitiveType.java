@@ -22,6 +22,7 @@ class PrimitiveType {
         randomWordIndex = getRandomInt(0, Word.nameList.length);
         programStart = System.currentTimeMillis();
         Word word = new Word(0, 50, Word.nameList[randomWordIndex]);
+        Player player = new Player(5,5,10);
         Boolean quit = false;
         while (!quit) {
             deltaTime = (System.currentTimeMillis() - programStart) - time;
