@@ -17,17 +17,19 @@ class PrimitiveType {
     public static int randomWordIndex;
 
     private static int targetWord = -1;
-    public static Player player = new Player(5,5,10);
+    public static Player player = new Player(24,40,10);
     
 
 
     public static void initWords(int numOfWords){
         int horizontalPosition = 0;
+        int verticalPosition = numOfWords;
         for (int i = 0; i < numOfWords; i++ ){
             randomWordIndex = getRandomInt(0, Word.nameList.length);
-            Word word = new Word(0, horizontalPosition, Word.nameList[randomWordIndex]);
+            Word word = new Word(verticalPosition, horizontalPosition, Word.nameList[randomWordIndex]);
             DynamicWordArray.addWord(word);
-            horizontalPosition = horizontalPosition + 10;
+            horizontalPosition += 10;
+            verticalPosition --;
         }
     }
 
@@ -65,20 +67,16 @@ class PrimitiveType {
                         targetWord = -1;
                     }
                 }               
-                //System.out.println(Arrays.toString(DynamicWordArray.wordList));
+               
+                if (DynamicWordArray.wordList.length < 6) {
+                    randomWordIndex = getRandomInt(0, Word.nameList.length);
+                    int randomWordPosition = getRandomInt(0, 200);
+                    word = new Word(0, randomWordPosition, Word.nameList[randomWordIndex]);
+                    DynamicWordArray.addWord(word);
+                    
+                }
                 
-                for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
-                    
-                    if (DynamicWordArray.wordList[i].destroyed) {
-                        DynamicWordArray.removeWord(DynamicWordArray.wordList[i]);
-                        randomWordIndex = getRandomInt(0, Word.nameList.length);
-                        int randomWordPosition = getRandomInt(0, 200);
-                        Word word = new Word(0, randomWordPosition, Word.nameList[randomWordIndex]);
-                        DynamicWordArray.addWord(word);
-                        
-                    }
-                    
-                }   
+                   
             }
 
             if (deltaSum >= 500 / wordSpeed) {
