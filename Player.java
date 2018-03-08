@@ -17,7 +17,7 @@ public class Player {
     private final int STREAKTHRESHOLD = 10;
 
     public Player(int posX, int posY, int _maxLifePoints) {
-        specialWeaponCount = 0;
+        specialWeaponCount = 5;
         streakCount = 0;
         maxLifePoints = _maxLifePoints;
         currentLifePoints = maxLifePoints;
