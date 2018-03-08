@@ -17,6 +17,7 @@ class PrimitiveType {
     public static int randomWordIndex;
 
     private static int targetWord = -1;
+    public static Player player = new Player(5,5,10);
     
 
 
@@ -33,8 +34,9 @@ class PrimitiveType {
     public static void main(String[] args) {
         Console.clearScreen();
         programStart = System.currentTimeMillis();
+        Player player = new Player(24,40,5);
+        Word word = new Word(0, 50, "lolka");
         PrimitiveType.initWords(6);
-        Player player = new Player(5,5,10);
         Boolean quit = false;
         while (!quit) {
             deltaTime = (System.currentTimeMillis() - programStart) - time;
