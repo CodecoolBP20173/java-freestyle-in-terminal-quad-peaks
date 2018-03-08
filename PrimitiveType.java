@@ -15,7 +15,10 @@ class PrimitiveType {
     private static long deltaTime;
     private static long deltaSum;
     public static int randomWordIndex;
+
+    private static int targetWord = -1;
     
+
 
     public static void initWords(int numOfWords){
         int horizontalPosition = 0;
@@ -45,21 +48,34 @@ class PrimitiveType {
                 {
                     quit = true;
                 }
-                for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
-                    DynamicWordArray.wordList[i].wordHitHandler(c);
-                }
+                if (targetWord == -1) {
+                    for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) { // Here i have to work
+                        if (DynamicWordArray.wordList[i].wordHitHandler(c)){
+                            targetWord = i; 
+                            break;                       
+                        }
+                    }
+                } else {
+                    Word targetWordObject = DynamicWordArray.wordList[targetWord];
+                    targetWordObject.wordHitHandler(c);
+                    if (targetWordObject.destroyed){
+                        targetWordObject.destroy();
+                        targetWord = -1;
+                    }
+                }               
                 //System.out.println(Arrays.toString(DynamicWordArray.wordList));
-                int horizontalPosition = 0;
+                
                 for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
                     
                     if (DynamicWordArray.wordList[i].destroyed) {
                         DynamicWordArray.removeWord(DynamicWordArray.wordList[i]);
                         randomWordIndex = getRandomInt(0, Word.nameList.length);
-                        Word word = new Word(0, horizontalPosition, Word.nameList[randomWordIndex]);
-                        DynamicWordArray.insertWord(word, i);
-                        horizontalPosition = 0;
+                        int randomWordPosition = getRandomInt(0, 200);
+                        Word word = new Word(0, randomWordPosition, Word.nameList[randomWordIndex]);
+                        DynamicWordArray.addWord(word);
+                        
                     }
-                    horizontalPosition = horizontalPosition + 10;    
+                    
                 }   
             }
 
