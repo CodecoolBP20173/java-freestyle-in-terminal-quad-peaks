@@ -182,7 +182,7 @@ public class Word {
         }
     }
 
-    public void destroySelf(){
+    public void destroy(){
         selfClear();
         DynamicWordArray.removeWord(this);
     }
@@ -200,7 +200,7 @@ public class Word {
     private void checkPlayerHit(){
         if (this.position.x == PrimitiveType.player.position.x){
             PrimitiveType.player.takeDamage(1);
-            destroySelf();
+            destroy();
         }
     }
 
