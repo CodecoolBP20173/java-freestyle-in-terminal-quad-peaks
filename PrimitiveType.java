@@ -37,7 +37,6 @@ class PrimitiveType {
         Console.clearScreen();
         programStart = System.currentTimeMillis();
         Player player = new Player(24,40,5);
-        Word word = new Word(0, 50, "lolka");
         PrimitiveType.initWords(4);
         Boolean quit = false;
         while (!quit) {
@@ -72,7 +71,7 @@ class PrimitiveType {
                 if (DynamicWordArray.wordList.length < 4) {
                     randomWordIndex = getRandomInt(0, Word.nameList.length);
                     int randomWordPosition = getRandomInt(0, 65);
-                    word = new Word(0, randomWordPosition, Word.nameList[randomWordIndex]);
+                    Word word = new Word(0, randomWordPosition, Word.nameList[randomWordIndex]);
                     DynamicWordArray.addWord(word);
                     
                 }
