@@ -17,7 +17,7 @@ class PrimitiveType {
     public static int randomWordIndex;
 
     private static int targetWord = -1;
-    public static Player player = new Player(24,40,10);
+    public static Player player = new Player(24,40,3);
     
 
 
@@ -47,6 +47,7 @@ class PrimitiveType {
 
             //INPUT CHECK
             Character c = tryToRead();
+            
             if (c != null) {
                 if (c == '0')
                 {
@@ -65,10 +66,21 @@ class PrimitiveType {
                     if (resultOfHit == Hitvalue.DESTROYED){
                         targetWord = -1;
                     } else if (resultOfHit == Hitvalue.MISS){
-                        player.streakCount = 0;
+                        player.resetStreak();
                     }
                 }               
                
+                
+                   
+            }
+
+            
+
+            if (deltaSum >= 500 / wordSpeed) {
+                for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
+                    DynamicWordArray.wordList[i].move();
+                }
+
                 if (DynamicWordArray.wordList.length < 6) {
                     randomWordIndex = getRandomInt(0, Word.nameList.length);
                     int randomWordPosition = getRandomInt(0, 65);
@@ -76,16 +88,12 @@ class PrimitiveType {
                     DynamicWordArray.addWord(word);
                     
                 }
-                
-                   
-            }
 
-            if (deltaSum >= 500 / wordSpeed) {
-                for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
-                    DynamicWordArray.wordList[i].move();
-                }
+                player.showPlayer();
+
                 deltaSum = 0;
             }
+            
         }
     }
 
