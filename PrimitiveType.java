@@ -20,7 +20,7 @@ class PrimitiveType {
     public static void main(String[] args) {
         Console.clearScreen();
         programStart = System.currentTimeMillis();
-        Player player = new Player(5,5,10);
+        Player player = new Player(24,40,5);
         Word word = new Word(0, 50, "lolka");
         Boolean quit = false;
         while (!quit) {
