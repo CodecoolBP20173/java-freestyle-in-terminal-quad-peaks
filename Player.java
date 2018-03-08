@@ -23,6 +23,10 @@ public class Player {
         currentLifePoints = maxLifePoints;
         position.x = posX;
         position.y = posY;
+        showPlayer();
+    }
+
+    public void showPlayer(){
         Coord[] playerCoords = new Coord[6];
         Coord pos0 = new Coord();
         pos0.x = position.x;

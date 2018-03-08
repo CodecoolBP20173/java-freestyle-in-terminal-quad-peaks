@@ -15,9 +15,8 @@ class PrimitiveType {
     private static long deltaTime;
     private static long deltaSum;
     public static int randomWordIndex;
-
     private static int targetWord = -1;
-    public static Player player = new Player(24,40,10);
+    public static Player player = new Player(24,40,3);
     
 
 
@@ -37,8 +36,7 @@ class PrimitiveType {
         Console.clearScreen();
         programStart = System.currentTimeMillis();
         Player player = new Player(24,40,5);
-        Word word = new Word(0, 50, "lolka");
-        PrimitiveType.initWords(6);
+        PrimitiveType.initWords(4);
         Boolean quit = false;
         while (!quit) {
             deltaTime = (System.currentTimeMillis() - programStart) - time;
@@ -47,6 +45,7 @@ class PrimitiveType {
 
             //INPUT CHECK
             Character c = tryToRead();
+            
             if (c != null) {
                 if (c == '0')
                 {
@@ -54,37 +53,45 @@ class PrimitiveType {
                 }
                 if (targetWord == -1) {
                     for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) { // Here i have to work
-                        if (DynamicWordArray.wordList[i].wordHitHandler(c)){
+                        if (DynamicWordArray.wordList[i].wordHitHandler(c) == Hitvalue.HIT){
                             targetWord = i; 
                             break;                       
                         }
                     }
                 } else {
                     Word targetWordObject = DynamicWordArray.wordList[targetWord];
-                    targetWordObject.wordHitHandler(c);
-                    if (targetWordObject.destroyed){
-                        targetWordObject.destroy();
+                    Hitvalue resultOfHit = targetWordObject.wordHitHandler(c);
+                    if (resultOfHit == Hitvalue.DESTROYED){
                         targetWord = -1;
+                    } else if (resultOfHit == Hitvalue.MISS){
+                        player.resetStreak();
                     }
                 }               
                
-                if (DynamicWordArray.wordList.length < 6) {
-                    randomWordIndex = getRandomInt(0, Word.nameList.length);
-                    int randomWordPosition = getRandomInt(0, 200);
-                    word = new Word(0, randomWordPosition, Word.nameList[randomWordIndex]);
-                    DynamicWordArray.addWord(word);
-                    
-                }
                 
                    
             }
+
+            
 
             if (deltaSum >= 500 / wordSpeed) {
                 for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
                     DynamicWordArray.wordList[i].move();
                 }
+
+                if (DynamicWordArray.wordList.length < 6) {
+                    randomWordIndex = getRandomInt(0, Word.nameList.length);
+                    int randomWordPosition = getRandomInt(0, 65);
+                    Word word = new Word(0, randomWordPosition, Word.nameList[randomWordIndex]);
+                    DynamicWordArray.addWord(word);
+                    
+                }
+
+                player.showPlayer();
+
                 deltaSum = 0;
             }
+            
         }
     }
 
