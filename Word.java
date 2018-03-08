@@ -198,7 +198,7 @@ public class Word {
     }
 
     private void checkPlayerHit(){
-        if (this.position.x == PrimitiveType.player.position.x){
+        if (this.position.x == PrimitiveType.player.position.x - 2){
             PrimitiveType.player.takeDamage(1);
             destroy();
         }
