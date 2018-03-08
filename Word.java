@@ -157,7 +157,9 @@ public class Word {
             return;
         }
         selfClear();
-        position.x += 1;
+        int[] direction = setMoveDirection();
+        position.x += direction[0];
+        position.y += direction[1];
         show();
     }
 
