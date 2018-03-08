@@ -54,23 +54,24 @@ class PrimitiveType {
                 }
                 if (targetWord == -1) {
                     for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) { // Here i have to work
-                        if (DynamicWordArray.wordList[i].wordHitHandler(c)){
+                        if (DynamicWordArray.wordList[i].wordHitHandler(c) == Hitvalue.HIT){
                             targetWord = i; 
                             break;                       
                         }
                     }
                 } else {
                     Word targetWordObject = DynamicWordArray.wordList[targetWord];
-                    targetWordObject.wordHitHandler(c);
-                    if (targetWordObject.destroyed){
-                        targetWordObject.destroy();
+                    Hitvalue resultOfHit = targetWordObject.wordHitHandler(c);
+                    if (resultOfHit == Hitvalue.DESTROYED){
                         targetWord = -1;
+                    } else if (resultOfHit == Hitvalue.MISS){
+                        player.streakCount = 0;
                     }
                 }               
                
                 if (DynamicWordArray.wordList.length < 4) {
                     randomWordIndex = getRandomInt(0, Word.nameList.length);
-                    int randomWordPosition = getRandomInt(0, 70);
+                    int randomWordPosition = getRandomInt(0, 65);
                     word = new Word(0, randomWordPosition, Word.nameList[randomWordIndex]);
                     DynamicWordArray.addWord(word);
                     

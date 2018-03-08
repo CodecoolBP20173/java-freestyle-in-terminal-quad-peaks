@@ -122,11 +122,7 @@ public class Word {
         show();
     }
 
-    public Boolean wordHitHandler(char typedChar) {
-        if(destroyed)
-        {
-            return false;
-        }
+    public Hitvalue wordHitHandler(char typedChar) {
         if (name.charAt(hitCount) == typedChar){
             hitCount ++;
             if (hitCount == name.length())
@@ -136,14 +132,19 @@ public class Word {
             else {
                 refresh();
             }
-            return true;
+            if(destroyed)
+            {
+                return Hitvalue.DESTROYED;
+            }
+            return Hitvalue.HIT;
         }
-        return false;
+        return Hitvalue.MISS;
     }
 
     public void die(){
         selfClear();
         destroyed = true;
+        destroy();
     }
 
     public void refresh() {
@@ -182,7 +183,7 @@ public class Word {
         }
     }
 
-    public void destroy(){
+    private void destroy(){
         selfClear();
         DynamicWordArray.removeWord(this);
     }
@@ -200,7 +201,7 @@ public class Word {
     private void checkPlayerHit(){
         if (this.position.x == PrimitiveType.player.position.x - 2){
             PrimitiveType.player.takeDamage(1);
-            destroy();
+            die();
         }
     }
 
