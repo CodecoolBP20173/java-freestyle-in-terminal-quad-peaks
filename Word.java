@@ -128,15 +128,12 @@ public class Word {
             if (hitCount == name.length())
             {
                 die();
+                return Hitvalue.DESTROYED;
             }
             else {
                 refresh();
+                return Hitvalue.HIT;
             }
-            if(destroyed)
-            {
-                return Hitvalue.DESTROYED;
-            }
-            return Hitvalue.HIT;
         }
         return Hitvalue.MISS;
     }
@@ -144,7 +141,7 @@ public class Word {
     public void die(){
         selfClear();
         destroyed = true;
-        destroy();
+        DynamicWordArray.removeWord(this);
     }
 
     public void refresh() {
@@ -153,16 +150,13 @@ public class Word {
     }
 
     public void move() {
-        if (destroyed)
-        {
-            return;
-        }
         selfClear();
         int[] direction = setMoveDirection();
         position.x += direction[0];
         position.y += direction[1];
-        checkPlayerHit();
-        show();
+        if (!checkPlayerHit()){
+            show();
+        }
     }
 
     public void show(){
@@ -176,16 +170,11 @@ public class Word {
         }
     }
 
-    private void selfClear() {
+    public void selfClear() {
         PrimitiveType.Console.moveTo(position.x, position.y);
         for (int i = 0; i < name.length(); i++) {
             System.out.print(" ");
         }
-    }
-
-    private void destroy(){
-        selfClear();
-        DynamicWordArray.removeWord(this);
     }
 
     private int[] setMoveDirection(){
@@ -198,11 +187,13 @@ public class Word {
         return direction;
     }
 
-    private void checkPlayerHit(){
+    private boolean checkPlayerHit(){
         if (this.position.x == PrimitiveType.player.position.x - 2){
             PrimitiveType.player.takeDamage(1);
             die();
+            return true;
         }
+        return false;
     }
 
 }
