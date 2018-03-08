@@ -1,27 +1,36 @@
 import com.codecool.termlib.Terminal;
 import java.util.concurrent.ThreadLocalRandom;
-
 import java.io.IOException;
-
 import com.codecool.termlib.Coord;
+import java.util.Arrays;
 
 class PrimitiveType {
 
     public static Terminal Console = new Terminal();
 
-    private static int wordSpeed = 5;
+    private static int wordSpeed = 1;
 
     private static long programStart;
     private static long time;
     private static long deltaTime;
     private static long deltaSum;
     public static int randomWordIndex;
+    
+
+    public static void initWords(int numOfWords){
+        int horizontalPosition = 0;
+        for (int i = 0; i < numOfWords; i++ ){
+            randomWordIndex = getRandomInt(0, Word.nameList.length);
+            Word word = new Word(0, horizontalPosition, Word.nameList[randomWordIndex]);
+            DynamicWordArray.addWord(word);
+            horizontalPosition = horizontalPosition + 10;
+        }
+    }
 
     public static void main(String[] args) {
         Console.clearScreen();
-        randomWordIndex = getRandomInt(0, Word.nameList.length);
         programStart = System.currentTimeMillis();
-        Word word = new Word(0, 50, Word.nameList[randomWordIndex]);
+        PrimitiveType.initWords(6);
         Player player = new Player(5,5,10);
         Boolean quit = false;
         while (!quit) {
@@ -36,15 +45,28 @@ class PrimitiveType {
                 {
                     quit = true;
                 }
-                word.wordHitHandler(c);
-                if (word.destroyed) {
-                    randomWordIndex = getRandomInt(0, Word.nameList.length);
-                    word = new Word(0, 50, Word.nameList[randomWordIndex]);
+                for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
+                    DynamicWordArray.wordList[i].wordHitHandler(c);
                 }
+                //System.out.println(Arrays.toString(DynamicWordArray.wordList));
+                int horizontalPosition = 0;
+                for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
+                    
+                    if (DynamicWordArray.wordList[i].destroyed) {
+                        DynamicWordArray.removeWord(DynamicWordArray.wordList[i]);
+                        randomWordIndex = getRandomInt(0, Word.nameList.length);
+                        Word word = new Word(0, horizontalPosition, Word.nameList[randomWordIndex]);
+                        DynamicWordArray.insertWord(word, i);
+                        horizontalPosition = 0;
+                    }
+                    horizontalPosition = horizontalPosition + 10;    
+                }   
             }
 
             if (deltaSum >= 500 / wordSpeed) {
-                word.move();
+                for (int i = 0; i < DynamicWordArray.wordList.length; i++ ) {
+                    DynamicWordArray.wordList[i].move();
+                }
                 deltaSum = 0;
             }
         }
