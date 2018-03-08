@@ -122,28 +122,26 @@ public class Word {
         show();
     }
 
-    public Boolean wordHitHandler(char typedChar) {
-        if(destroyed)
-        {
-            return false;
-        }
+    public Hitvalue wordHitHandler(char typedChar) {
         if (name.charAt(hitCount) == typedChar){
             hitCount ++;
             if (hitCount == name.length())
             {
                 die();
+                return Hitvalue.DESTROYED;
             }
             else {
                 refresh();
+                return Hitvalue.HIT;
             }
-            return true;
         }
-        return false;
+        return Hitvalue.MISS;
     }
 
     public void die(){
         selfClear();
         destroyed = true;
+        DynamicWordArray.removeWord(this);
     }
 
     public void refresh() {
@@ -152,16 +150,13 @@ public class Word {
     }
 
     public void move() {
-        if (destroyed)
-        {
-            return;
-        }
         selfClear();
         int[] direction = setMoveDirection();
         position.x += direction[0];
         position.y += direction[1];
-        checkPlayerHit();
-        show();
+        if (!checkPlayerHit()){
+            show();
+        }
     }
 
     public void show(){
@@ -175,16 +170,11 @@ public class Word {
         }
     }
 
-    private void selfClear() {
+    public void selfClear() {
         PrimitiveType.Console.moveTo(position.x, position.y);
         for (int i = 0; i < name.length(); i++) {
             System.out.print(" ");
         }
-    }
-
-    public void destroy(){
-        selfClear();
-        DynamicWordArray.removeWord(this);
     }
 
     private int[] setMoveDirection(){
@@ -197,11 +187,13 @@ public class Word {
         return direction;
     }
 
-    private void checkPlayerHit(){
+    private boolean checkPlayerHit(){
         if (this.position.x == PrimitiveType.player.position.x - 2){
             PrimitiveType.player.takeDamage(1);
-            destroy();
+            die();
+            return true;
         }
+        return false;
     }
 
 }

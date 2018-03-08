@@ -31,6 +31,10 @@ public class DynamicWordArray {
     {
         for (int i = 0; i < wordList.length; i++){
             if (wordList[i].position.x == pos.x || wordList[i].position.x == pos.x - 1 || wordList[i].position.x == pos.x + 1){
+                if (i == PrimitiveType.targetWord)
+                {
+                    PrimitiveType.targetWord = -1;
+                }
                 removeWord(wordList[i]);
             }
         }
