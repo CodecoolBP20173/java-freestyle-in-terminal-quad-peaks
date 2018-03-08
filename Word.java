@@ -160,6 +160,7 @@ public class Word {
         int[] direction = setMoveDirection();
         position.x += direction[0];
         position.y += direction[1];
+        checkPlayerHit();
         show();
     }
 
@@ -186,9 +187,15 @@ public class Word {
         int xDir = PrimitiveType.player.position.x - this.position.x;
         int yDir = PrimitiveType.player.position.y - this.position.y;
         yDir = (int) Math.round(yDir / xDir);
-        direction[0] = xDir;
+        direction[0] = 1;
         direction[1] = yDir;
         return direction;
+    }
+
+    private void checkPlayerHit(){
+        if (this.position.x == PrimitiveType.player.position.x){
+            PrimitiveType.player.takeDamage(1);
+        }
     }
 
 }
