@@ -2,6 +2,7 @@ import com.codecool.termlib.Terminal;
 import com.codecool.termlib.Coord;
 import com.codecool.termlib.Direction;
 import com.codecool.termlib.Color;
+import java.lang.Math;
 
 public class Word {
 
@@ -176,6 +177,16 @@ public class Word {
         for (int i = 0; i < name.length(); i++) {
             System.out.print(" ");
         }
+    }
+
+    private int[] setMoveDirection(){
+        int[] direction = new int[2];
+        int xDir = PrimitiveType.player.position.x - this.position.x;
+        int yDir = PrimitiveType.player.position.y - this.position.y;
+        yDir = (int) Math.round(yDir / xDir);
+        direction[0] = xDir;
+        direction[1] = yDir;
+        return direction;
     }
 
 }
