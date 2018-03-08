@@ -11,13 +11,17 @@ public class Player {
     public Coord position = new Coord();
     public int specialWeaponCount;
     public int streakCount;
+    public int score;
     public int maxLifePoints;
     public int currentLifePoints;
 
-    private final int STREAKTHRESHOLD = 10;
+    private int wordSpeedUpScore = 0;
+
+    private final int STREAKTHRESHOLD = 40;
 
     public Player(int posX, int posY, int _maxLifePoints) {
-        specialWeaponCount = 5;
+        score = 0;
+        specialWeaponCount = 3;
         streakCount = 0;
         maxLifePoints = _maxLifePoints;
         currentLifePoints = maxLifePoints;
@@ -26,8 +30,8 @@ public class Player {
         showPlayer();
     }
 
-    public void showPlayer(){
-        Coord[] playerCoords = new Coord[6];
+    public void showPlayer() {
+        Coord[] playerCoords = new Coord[4];
         Coord pos0 = new Coord();
         pos0.x = position.x;
         pos0.y = position.y;
@@ -44,20 +48,13 @@ public class Player {
         pos3.x = position.x - 1;
         pos3.y = position.y;
         playerCoords[3] = pos3;
-        Coord pos4 = new Coord();
-        pos4.x = position.x - 2;
-        pos4.y = position.y;
-        playerCoords[4] = pos4;
-        Coord pos5 = new Coord();
-        pos5.x = position.x - 3;
-        pos5.y = position.y;
-        playerCoords[5] = pos5;
         drawPlayer(playerCoords);
     }
 
     public void reset() {
         specialWeaponCount = 0;
         streakCount = 0;
+        score = 0;
         currentLifePoints = maxLifePoints;
     }
 
@@ -71,6 +68,7 @@ public class Player {
     }
 
     public void takeDamage(int amount) {
+        score -= 20;
         currentLifePoints -= amount;
         if (currentLifePoints <= 0) {
             die();
@@ -85,6 +83,15 @@ public class Player {
         }
     }
 
+    public void increaseScore(int amount) {
+        score += amount;
+        wordSpeedUpScore += amount;
+        if (wordSpeedUpScore >= 20){
+            PrimitiveType.wordSpeed += 0.1f;
+            wordSpeedUpScore = 0;
+        }
+    }
+
     public void resetStreak() {
         streakCount = 0;
     }
@@ -94,7 +101,7 @@ public class Player {
     }
 
     public Boolean useSpecialWeapon() {
-        if (specialWeaponCount > 0) {
+        if (specialWeaponCount > 0 && PrimitiveType.sW == null) {
             specialWeaponCount--;
             return true;
         }
@@ -102,7 +109,15 @@ public class Player {
     }
 
     private void die() {
-        reset();
+        PrimitiveType.gameRunning = false;
+        //reset();
+    }
+
+    public void renderUI() {
+        String ui = String.format("%d HP |  %d EMP  | %d/%d STREAK | %d SCORE | %d TIME   ",
+        currentLifePoints, specialWeaponCount, streakCount,STREAKTHRESHOLD, score, PrimitiveType.time / 1000);
+        PrimitiveType.Console.moveTo(24, 0);
+        System.out.print(ui);
     }
 
 }
