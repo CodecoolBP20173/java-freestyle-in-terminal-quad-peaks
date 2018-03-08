@@ -6,7 +6,8 @@ import java.util.Arrays;
 import com.codecool.termlib.Color;
 
 public class DynamicWordArray {
-    static Word[] wordList;
+    static Word[] wordList = new Word[0];
+
     public static void addWord(Word wordObject){
         Word[] newWordList = Arrays.copyOf(wordList, wordList.length+1);
         newWordList[newWordList.length-1] = wordObject;
@@ -27,4 +28,17 @@ public class DynamicWordArray {
 
     }
 
+    public static void insertWord(Word wordObject, int index){
+        Word[] newWordList = Arrays.copyOf(wordList, wordList.length+1);
+        int index2 = 0;
+        for(int i=0; i<newWordList.length; i++){
+            if (i == index){
+                newWordList[i] = wordObject;
+                continue;
+            }
+            newWordList[i] = wordList[index2]; 
+            index2++;
+        }
+        wordList = newWordList;
+    }
 }
