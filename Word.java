@@ -139,6 +139,7 @@ public class Word {
     }
 
     public void die(){
+        PrimitiveType.targetWord = -1;
         selfClear();
         destroyed = true;
         DynamicWordArray.removeWord(this);

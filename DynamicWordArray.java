@@ -25,7 +25,16 @@ public class DynamicWordArray {
             newWordList[i-correction] = wordList[i];
         }
         wordList = newWordList;
+    }
 
+    public static void removeWordsAtPosition(Coord pos)
+    {
+        PrimitiveType.targetWord = -1;
+        for (int i = 0; i < wordList.length; i++){
+            if (wordList[i].position.x == pos.x || wordList[i].position.x == pos.x - 1 || wordList[i].position.x == pos.x + 1){
+                removeWord(wordList[i]);
+            }
+        }
     }
 
     public static void insertWord(Word wordObject, int index){
