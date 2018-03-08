@@ -182,6 +182,11 @@ public class Word {
         }
     }
 
+    public void destroySelf(){
+        selfClear();
+        DynamicWordArray.removeWord(this);
+    }
+
     private int[] setMoveDirection(){
         int[] direction = new int[2];
         int xDir = PrimitiveType.player.position.x - this.position.x;
@@ -195,6 +200,7 @@ public class Word {
     private void checkPlayerHit(){
         if (this.position.x == PrimitiveType.player.position.x){
             PrimitiveType.player.takeDamage(1);
+            destroySelf();
         }
     }
 
