@@ -15,6 +15,7 @@ class PrimitiveType {
     private static long deltaTime;
     private static long deltaSum;
     public static int randomWordIndex;
+    public static Player player = new Player(5,5,10);
     
 
     public static void initWords(int numOfWords){
@@ -31,7 +32,6 @@ class PrimitiveType {
         Console.clearScreen();
         programStart = System.currentTimeMillis();
         PrimitiveType.initWords(6);
-        Player player = new Player(5,5,10);
         Boolean quit = false;
         while (!quit) {
             deltaTime = (System.currentTimeMillis() - programStart) - time;
